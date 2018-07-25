@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html data-ng-app="model_module">
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="AngularFile/angularjs.js"></script>
+    </head>
+    <body>
+        <div data-ng-controller="ctrl">
+            <p>Enter The Name : <input type="text" value="{{name}}" data-ng-model="name" /></p>
+            <p>Your Name Is : {{name}}</p>
+        </div>
+        
+        <H1>Validation of User Input</H1>
+        
+        <div>
+            <form name="myForm">
+                <p>Enter The Email : <input type="email" data-ng-model="text" name="myEmail"/>
+                    <span data-ng-show="myForm.myEmail.$error.email">Not a Valid Email</span></p>
+           
+                <p>Enter The Number : <input type="number" data-ng-model="text2" name="myNumber"/>
+                    <span data-ng-show="myForm.myNumber.$error.number">Not a Valid Number</span></p>
+            </form>
+        </div>
+        
+        
+        <script>
+            var jsApp = angular.module('model_module',[]);
+            
+            jsApp.controller('ctrl',function($scope){
+                $scope.name="Gaurav Khandelwal";
+            });
+        </script>
+    </body>
+</html>

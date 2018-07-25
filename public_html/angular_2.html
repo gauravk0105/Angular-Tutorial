@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="AngularFile/angularjs.js"></script>
+    </head>
+    <body>
+<!--        <div data-ng-app="" data-ng-init="firstname='Gaurav Khandelwal'">
+            <p>Hello <span data-ng-bind="firstname"></span></p>
+            <p>Hello <span data-ng-bind=5+3></span></p>
+            <p>Hello By Expression : <span>{{ firstname }}</span></p>
+            <p>{{7+2+3}}</p>
+        </div>-->
+        <div>
+            <p>{{5+7}}</p>
+        </div>
+        
+        
+        <!-- module and controller and angular js -->
+        
+        <div data-ng-app="myapp" data-ng-controller="ctrl">
+            <p>First Name <input type="text" data-ng-model="firstname"/></p>
+            <p>Last Name <input type="text" data-ng-model="lastname"/></p>
+            <p>Your Name is : <span>{{ firstname+" "+lastname }}</span></p>
+        </div>
+        
+        <script>
+            var jsApp = angular.module('myapp',[]);
+            jsApp.controller('ctrl',function($scope){
+                $scope.firstname="Gaurav";
+                $scope.lastname="Khandelwal";
+            });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html data-ng-app="custom_module">
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="AngularFile/angularjs.js"></script>
+    </head>
+    <body>
+        
+        <div>
+            <form name="myForm">
+                <p>
+                  Enter Your Email : <input name="myAddr" type="email" placeholder="Enter The Email" data-ng-model="mail" required=""/>
+                  <span style="color:red" data-ng-show="myForm.myAddr.$error.email || myForm.myAddr.$error.required">Invalid Email</span>
+                </p>
+                <p>
+                    Enter The Password : 
+                   <input type="password" name="myPwd" placeholder="Enter The Password" data-ng-model="pwd" required="" data-pwd-validator/>
+                  <span style="color:red" data-ng-show="myForm.myPwd.$error.pwdCheck || myForm.myPwd.$error.required">
+                      Invalid Password Should be length greater than 10</span>
+                </p>
+            </form>
+        </div>
+        
+        <script>
+            var jsApp = angular.module('custom_module',[]);
+            
+            jsApp.directive('pwdValidator',function(){
+                return {
+                    require : "ngModel",
+                    link : function(scope,element,attr,mctrl){
+                           mctrl.$parsers.push(function(value){
+                               if(value.length<=10)
+                                   mctrl.$setValidity('pwdCheck',false);
+                               else
+                                   mctrl.$setValidity('pwdCheck',true);
+                               return value;
+                           }); 
+                    }
+                };
+            });
+        </script>
+    </body>
+</html>

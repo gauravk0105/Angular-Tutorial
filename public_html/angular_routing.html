@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html data-ng-app="app_module">
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="AngularFile/angularjs.js"></script>
+        <script src="AngularFile/route.js"></script>
+    </head>
+    <body>
+        <div data-ng-controller="ctrl">
+            <p>Time : {{time}}</p>
+        </div>
+        
+        <div>
+            <p><a href="#/!">expression.html</a></p>
+            <p><a href="#!service">custom_service.html</a></p>
+            <p><a href="#!validation">custom_validation.html</a></p>
+        </div>
+        
+        
+        <div data-ng-view="">
+            
+        </div>
+        
+        <script>
+            var jsApp = angular.module('app_module',["ngRoute"]);
+            
+            jsApp.config(function($routeProvider){
+                $routeProvider.when("/",{
+                    templateUrl : "expression.html",
+                    controller : "ctrl1"
+                }).when("/service",{
+                    templateUrl : "custom_service.html",
+                    controller : "ctrl2"
+                }).when("/validation",{
+                   templateUrl : "custom_validation.html",
+                    controller : "ctrl3" 
+                });
+            });
+            
+            jsApp.controller('ctrl1',function($scope){
+                $scope.page = "expression.html Page";
+            });
+            
+            jsApp.controller('ctrl2',function($scope){
+                $scope.page = "custom_service.html Page";
+            });
+            
+            jsApp.controller('ctrl3',function($scope){
+                $scope.page = "custom_validation.html Page";
+            });
+            
+            jsApp.controller('ctrl',function($scope,$interval){
+                $scope.time=new Date().toLocaleTimeString();
+                $interval(function(){
+                    $scope.time=new Date().toLocaleTimeString();
+                },1000);
+            });
+            
+        </script>
+    </body>
+</html>

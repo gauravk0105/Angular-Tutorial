@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html data-ng-app="service_module">
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="AngularFile/angularjs.js"></script>
+    </head>
+    <body>
+        
+        <div data-ng-controller="timeout_controller">
+            <H3>Timeout Service</H3>
+            <H2>{{ content }}</H2>
+        </div>
+        
+        <div data-ng-controller="interval_controller">
+            <H3>Interval Service</H3>
+            <H2>{{ time }}</H2>
+        </div>
+        
+        <div data-ng-controller="ctrl1">
+            <H3>Location Service</H3>
+            <p>{{url}}</p>
+        </div>
+        
+       
+        <div data-ng-controller="ctrl2">
+            <H3>http Service Using .get Method</H3>
+            <H3>{{url}}</H3>
+        </div>
+        
+        
+        <div data-ng-controller="ctrl3">
+            <H3>http Service using object</H3>
+            <H3>Hello {{page}}</H3>
+        </div>
+        
+        
+        <div data-ng-controller="ctrl4">
+            <p>{{content}}</p>
+            <p>{{statuscode}}</p>
+            <p>{{statustext}}</p>
+        </div>
+        
+        
+        <div data-ng-controller="ctrl5">
+            <H3>Reading Data From Server in form json</H3>
+            <table border="1">
+                <tr>
+                    <th>Name</th>
+                    <th>City</th>
+                    <th>Country</th>
+                </tr>
+                <tr data-ng-repeat="x in customers | orderBy:'Country'">
+                    <td>{{x.Name}}</td>
+                    <td>{{x.City}}</td>
+                    <td>{{x.Country}}</td>
+                </tr>
+            </table>
+        </div>
+     
+        
+        
+        <script>
+            var jsApp = angular.module('service_module',[]);
+            
+            jsApp.controller('interval_controller',function($scope,$interval){
+                $scope.time=new Date().toLocaleTimeString();
+                $interval(function(){
+                    $scope.time=new Date().toLocaleTimeString();
+                },1000);
+            });
+            
+            jsApp.controller('ctrl1',function($scope,$location){
+                $scope.url = $location.absUrl();
+            });
+            
+            jsApp.controller('ctrl2',function($scope,$http){
+                $http.get("angular_controller.html").then(function(response){
+                    $scope.url = response.data;
+                });
+            });
+            
+            jsApp.controller('ctrl3',function($scope,$http){
+                $http({method:"GET",url:"angular_directive.html"})
+                        .then(function (response){
+                            $scope.page=response.data;
+                        },function (response){
+                            $scope.page=response.statusText;
+                        });
+            });
+            
+            jsApp.controller('ctrl4',function($scope,$http){
+                $http.get("angular_module.html")
+                        .then(function(response){
+                            // success
+                            
+                            $scope.content=response.data;
+                            $scope.statuscode=response.status;
+                            $scope.statustext=response.statusText;
+                        },function(response){
+                            $scope.content="Something Went Wrong";
+                        });
+            });
+            
+            jsApp.controller('ctrl5',function($scope,$http){
+                $http.get("customer_json.json")
+                        .then(function(response){
+                            $scope.customers=response.data.records;
+                        },function(response){
+                            window.alert("Something Went Wrong");
+                        });
+            });
+            
+            jsApp.controller("timeout_controller",function($scope,$timeout){
+                $scope.content="Welcome Gaurav";
+                $timeout(function(){
+                    $scope.content="How Are You? Gaurav....."
+                },2000);
+            });
+        </script>
+    </body>
+</html>

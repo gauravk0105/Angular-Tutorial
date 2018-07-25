@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html data-ng-app="demo_module">
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="AngularFile/angularjs.js"></script>
+    </head>
+    <body>
+        
+        <div data-ng-controller="ctrl">
+            <form name="myForm">
+                <p><span style="color:{{text}}">Enter The Color Name : </span>  
+                  <input name="myColor" type="text" style="background-color:{{text}}" data-ng-model="text" placeholder="Enter The Color" required=""/>
+                  <span data-ng-show="myForm.myColor.$error.required">Cannot Remain Empty</span>
+                </p>  
+                
+                <p><span style="color:{{text}}">Enter The Name : </span> 
+                    <input type="text" style="background-color:{{text}}" name="myName" placeholder="Enter The Name" data-ng-model="newname" required=""/>
+                    <span data-ng-show="!myForm.myName.$error.required">
+                        <input style="background-color:{{text}}" data-ng-click="addToList()" type="button" value="Add To List"></span>
+                    <span data-ng-show="myForm.myName.$error.required">
+                        Cannot Remain Empty</span>    
+                </p>
+                
+                <ul>
+                    <li data-ng-repeat="x in arrName">
+                        <span style="color: {{text}}">{{ x }} 
+                            <input data-ng-click="arrName | removeFilter : $index" style="background-color:{{text}}" type="button" value="Remove"/></span>
+                    </li>
+                </ul>
+            </form>
+        </div>
+        
+        <script>
+            var jsApp = angular.module('demo_module',[]);
+            
+            jsApp.service('$ListService',function(){
+                this.addToList = function(arr,name){
+                    arr.push(name);
+                    return arr;
+                };
+                
+                this.removeFromList = function(arr,index){
+                    arr.splice(index,1);
+                    return arr;
+                };
+            });
+           
+           jsApp.filter('removeFilter',function($ListService){
+               return function(arr,index)
+               {
+                   var value = confirm("Do You Wanna Remove "+arr[index]+" From List?");
+                   if(value)
+                        arr=$ListService.removeFromList(arr,index);
+                   return arr;
+               };
+           });
+           
+            
+            jsApp.controller('ctrl',function($scope,$ListService){
+                $scope.text = "blue";
+                $scope.arrName=[];
+                $scope.addToList = function(){
+                    $scope.arrname=$ListService.addToList($scope.arrName,$scope.newname);    
+                };
+                $scope.remove = function(index){
+                    var value = confirm("Do You Wanna Remove "+$scope.arrName[index]+" From List?");
+                    if(value)
+                        $scope.arrname=$ListService.removeFromList($scope.arrName,index);
+                };
+            });
+        </script>
+    </body>
+</html>

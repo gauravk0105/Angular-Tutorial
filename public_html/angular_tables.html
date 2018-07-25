@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html data-ng-app="table_module">
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="AngularFile/angularjs.js"></script>
+    </head>
+    <body>
+        
+        <div data-ng-controller="table_ctrl">
+            <table border="1">
+                <tr>
+                    <th>Index</th>
+                    <th>Name</th>
+                    <th>City</th>
+                    <th>Country</th>
+                </tr>
+                <tr data-ng-repeat="x in customers"> 
+                    <td ng-if="$odd" style="background-color:gray">{{$index+1}}</td>
+                    <td ng-if="$odd" style="background-color:gray">{{x.Name}}</td>
+                    <td ng-if="$odd" style="background-color:gray">{{x.City}}</td>
+                    <td ng-if="$odd" style="background-color:gray">{{x.Country}}</td>
+                    
+                    <td ng-if="$even" style="background-color:transparent">{{$index+1}}</td>
+                    <td ng-if="$even" style="background-color:transparent">{{x.Name}}</td>
+                    <td ng-if="$even" style="background-color:transparent">{{x.City}}</td>
+                    <td ng-if="$even" style="background-color:transparent">{{x.Country}}</td>
+                </tr>
+            </table>
+            
+            <select data-ng-model="person" data-ng-options="x.Name for x in customers"></select>  
+            <H2>Person Name : {{person.Name}}</h2>
+            <H2>Person City : {{person.City}}</h2>
+            <H2>Person Country : {{person.Country}}</h2>
+        </div>
+
+        
+        <script>
+            var jsApp = angular.module('table_module',[]);
+            
+            jsApp.controller('table_ctrl',function($scope,$http){
+                $http({
+                    method:"GET",
+                    url:"customer_json.json"
+                }).then(function(response){
+                    $scope.customers = response.data.records;
+                },function(response){
+                    window.alert("Found Error In Request");
+                });
+            });
+        </script>
+    </body>
+</html>

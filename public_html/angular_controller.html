@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html data-ng-app="con_module">
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="AngularFile/angularjs.js"></script>
+    </head>
+    <body>
+        <div data-ng-controller="ctrl">
+            <form name="myForm">
+                <p>Enter The First Number : <input type="number" name="n1" data-ng-model="num1" required />
+                <span data-ng-show="myForm.n1.$error.number || myForm.n1.$error.required">Not A Valid Number</span></p> 
+                <p>Enter The Second Number : <input type="number" name="n2" data-ng-model="num2" required/>
+                <span data-ng-show="myForm.n2.$error.number || myForm.n2.$error.required">Not A Valid Number</span></p>
+                <p data-ng-click="swap()">Click Here To Swap The Two Input Number</p>
+            </form>
+        </div>
+        
+        <script>
+            var jsApp = angular.module('con_module',[]);
+            
+            jsApp.controller('ctrl',function($scope){
+                $scope.num1=1;
+                $scope.num2=2;
+                $scope.swap=function(){
+                                           temp = $scope.num1;
+                                           $scope.num1 = $scope.num2;
+                                           $scope.num2 = temp;
+                                           window.alert("Swap Successful");
+                                      };
+            });
+        </script>
+    </body>
+</html>

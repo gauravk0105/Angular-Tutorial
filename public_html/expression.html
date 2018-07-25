@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="AngularFile/angularjs.js"></script>
+    </head>
+    <body>
+            
+<!--        <div data-ng-app="myApp" data-ng-controller="ctrl">
+            <p>Enter The Color : <input type="text" style="background-color:{{myColor}}" data-ng-model="myColor"/></P>
+            <p>{{myColor}}</P>
+        </div>
+        <script>
+            var jsApp = angular.module('myApp',[]);
+            jsApp.controller('ctrl',function($scope){
+                $scope.myColor="white";
+            });
+        </script>-->
+        
+        
+<!--        <div data-ng-app="" data-ng-init="firstname='Gaurav';lastname='khandelwalasd';">
+            <p>Expression : {{firstname+" "+lastname}}</p>
+            <p data-ng-bind="firstname+' 5 '"></p>
+        </div>-->
+
+        <div data-ng-app="" data-ng-init="person={firstname:'gaurav',lastname:'khandelwal'};age=13">
+            <p>Your Name Is : {{ person.firstname + " " + person.lastname }}</p>   
+            <p>Your Age Is : {{ age }}</p>
+        </div>
+        
+            
+
+    </body>
+</html>

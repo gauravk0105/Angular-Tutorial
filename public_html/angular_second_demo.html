@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html data-ng-app="second_module">
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="AngularFile/angularjs.js"></script>
+    </head>
+    <body>
+        
+        <div data-ng-controller="control">
+            <H2>User's Record</h2>
+            <form name="myForm">
+                <p>Enter The Number of Row To Be Display : 
+                    <input type="number" name="myNum" data-ng-model="num" data-num-validator="" required="" placeholder="Enter the Number of Row To Be Display" />
+                    <span style="color:red" data-ng-show="myForm.myNum.$error.number || myForm.myNum.$error.positive || myForm.myNum.$error.required">
+                        Not A Valid Number</span>
+                    <span>
+                        <input data-ng-click="changeNum()" data-ng-disabled="!myForm.myNum.$valid" type="button" value="Limit Array" />
+                    </span>
+                </p>
+                <table border="1">
+                    <tr>
+                        <th>S.No</th>
+                        <th>Name</th>
+                        <th>Age</th>
+                        <th>Gender</th>
+                    </tr>
+                    <tr data-ng-repeat="x in customers | limitTo : currlimit">
+                        <td>{{$index+1}}</td>
+                        <td>{{x.name}}</td>
+                        <td>{{x.age}}</td>
+                        <td>{{x.gender}}</td>
+                    </tr>
+                </table>
+            </form>
+            
+        </div>
+        
+        <script>
+            var jsApp = angular.module('second_module',[]);
+            
+            jsApp.directive('numValidator',function(){
+                return {
+                    require : "ngModel",
+                    link : function(scope,element,attr,mtcrl){
+                            mtcrl.$parsers.push(function(value){
+                                if(value<=0 || value>=6)
+                                {
+                                    mtcrl.$setValidity('positive',false);
+                                }
+                                else{
+                                    mtcrl.$setValidity('positive',true);
+                                }
+                                return value;
+                            });
+                    }
+                };
+            });
+            
+            jsApp.controller('control',function($scope){
+                $scope.customers = [{
+                        name:"gaurav",age:"19",gender:"Male"
+                },{
+                    name:"Payal",age:"22",gender:"Female"
+                },{
+                    name:"Rohit",age:"25",gender:"Male"
+                },{
+                    name:"Ravi",age:"27",gender:"Male"
+                },{
+                    name:"Urmila",age:"45",gender:"Female"
+                }];
+                
+                $scope.currlimit = $scope.customers.length;
+                
+                $scope.num = $scope.customers.length;
+                
+                $scope.changeNum = function(){
+                    $scope.currlimit = $scope.num;
+                };
+            });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html data-ng-app="custom_service">
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="AngularFile/angularjs.js"></script>
+    </head>
+    <body>
+        
+        <div data-ng-controller="custom_controller">
+            <h3>Array Element are : <span data-ng-repeat="x in numbers">{{x+" "}}</span></h3>
+            <H4>Sum Of Array Element is : {{ numbers | getSum }}</H4>
+        </div>
+        
+        <script>
+            var jsApp = angular.module('custom_service',[]);
+            
+            jsApp.controller('custom_controller',function($scope){
+                $scope.numbers = [1,2,3,4,5,6];
+            });
+            
+            jsApp.filter('getSum',function(){
+                return function(x){
+                    var sum=0;
+                    for(var i=0;i<x.length;i++){
+                        sum+=x[i];
+                    }
+                    return sum;
+                };
+            });
+        </script>
+    </body>
+</html>
+ 

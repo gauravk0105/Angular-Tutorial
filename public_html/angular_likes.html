@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html data-ng-app="module">
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="AngularFile/angularjs.js"></script>
+    </head>
+    <body>
+        
+        <div data-ng-controller="ctrl" >
+            <table border="1">
+                <tr>
+                    <th>Index</th>
+                    <th>Name</th>
+                    <th>Likes</th>
+                    <th>Dislikes</th>
+                    <th>Add Likes Or Dislikes</th>
+                </tr>
+                <tr data-ng-repeat="person in persons">
+                    <td data-ng-if="$odd" style="background-color:gray">{{$index+1}}</td>
+                    <td data-ng-if="$odd" style="background-color:gray">{{person.Name}}</td>
+                    <td data-ng-if="$odd" style="background-color:gray">{{person.likes}}</td>
+                    <td data-ng-if="$odd" style="background-color:gray">{{person.dislikes}}</td>
+                    <td data-ng-if="$odd" style="background-color:gray;text-align: center" >
+                        <input type="button" value="Like" data-ng-click="addLike($index)"/>
+                        <input type="button" value="Dislike" data-ng-click="addDislike($index)"/>
+                    </td>
+                    
+                    <td data-ng-if="$even" style="background-color:transparent">{{$index+1}}</td>
+                    <td data-ng-if="$even" style="background-color:transparent">{{person.Name}}</td>
+                    <td data-ng-if="$even" style="background-color:transparent">{{person.likes}}</td>
+                    <td data-ng-if="$even" style="background-color:transparent">{{person.dislikes}}</td>
+                    <td data-ng-if="$even" style="background-color:gray;text-align: center">
+                        <input type="button" value="Like" data-ng-click="addLike($index)"/>
+                        <input type="button" value="Dislike" data-ng-click="addDislike($index)"/>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        
+        
+        <script>
+            var jsApp = angular.module('module',[]);
+            
+            jsApp.controller('ctrl',function($scope){
+                $scope.persons=[
+                    {Name:"Gaurav Khandelwal",likes:0,dislikes:0},
+                    {Name:"Pratik Pandey",likes:0,dislikes:0},
+                    {Name:"Tejeshwar Saini",likes:0,dislikes:0},
+                    {Name:"Shrikant Deshmane",likes:0,dislikes:0},
+                    {Name:"Shubham Guglani",likes:0,dislikes:0}
+                ];
+                
+                $scope.addLike = function(index){
+                    $scope.persons[index].likes++;
+                };
+                
+                $scope.addDislike = function(index){
+                    $scope.persons[index].dislikes++;
+                };
+            });
+        </script>
+    </body>
+</html>

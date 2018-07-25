@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html data-ng-app="angular_filter">
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="AngularFile/angularjs.js"></script>
+    </head>
+    <body>
+        
+        <div data-ng-controller="local_ctrl1">
+            <p>First Name : {{ person.firstname | uppercase }}</p>
+        </div>
+        
+        
+        
+        <div data-ng-controller="local_ctrl2">
+            <ul>
+                <li data-ng-repeat="x in names | orderBy:'state'">{{ x.state+" "+x.capital  }}</li>
+            </ul>
+        </div>
+        
+        
+        <!-- Currency Filter -->
+        
+        <div data-ng-init="price=9.9;">
+            <H3>Currency Filter</H3>
+            <p>{{ price | currency}}</p>
+        </div>
+        
+        <!-- filter Filter -->
+        
+        <div data-ng-controller="local_ctrl3">
+            <H3>filter Filter</H3>
+            <p><input type="text" data-ng-model="text"/></p>
+            <ul>
+                <li data-ng-repeat="x in names | filter:text">{{x}}</li>
+            </ul>
+        </div>
+        
+        
+        <!-- User Based Search -->
+        
+        <div data-ng-controller="local_ctrl4">
+            <H3>User Based Search</h3>
+            <table border="1">
+                <tr>
+                    <th data-ng-click="selectState()">States</th>
+                    <th data-ng-click="selectCapital()">Capitals</th>
+                </tr>
+                <tr data-ng-repeat="x in names | orderBy:userSelect">
+                    <td>{{x.state}}</td>
+                    <td>{{x.capital}}</td>
+                </tr>
+            </table>
+        </div>
+        
+        
+        <!-- custom Filter -->
+        
+        <div data-ng-controller='local'>
+            <H3>Custom Filter</H3>
+            <ul>
+                <li data-ng-repeat="x in getNames">{{ x | userFilter}}</li>
+            </ul>
+        </div>
+        
+        <!-- Sum of odd and even filter -->
+        
+        <div data-ng-controller="num_ctrl">
+            <H3>User Defined Filter For addition of number at odd and even place</H3>
+            <ul>
+                <li data-ng-repeat="x in numbers | getSum">
+                    {{ x }}
+                </li>
+            </ul>
+        </div>
+        
+        <script>
+            var jsApp = angular.module('angular_filter',[]);
+            
+            jsApp.controller('num_ctrl',function($scope){
+                $scope.numbers=[1,2,3,4,5,6];
+            });
+            
+            jsApp.filter('getSum',function(){
+                return function(x){
+                    var odd=0;
+                    var even=0;
+                    for(var i =0;i<x.length;i++)
+                    {
+                        if(i%2==0)
+                        {
+                            odd=odd+x[i];
+                        }
+                        else{
+                            even=even+x[i];
+                        }
+                    }
+                    var arr = [odd,even];
+                    return arr;
+                };
+            });
+            
+            jsApp.controller('local_ctrl1',function($scope){
+                $scope.person = {
+                     firstname : "Gaurav",
+                     lastname : "Khandelwal",
+                     age : 18
+                };
+            });
+            
+            
+            jsApp.controller('local_ctrl2',function($scope){
+                $scope.names=[
+                    {state:'Rajasthan',capital:'Jaipur'},
+                    {state:'UP',capital:'Lucknow'},
+                    {state:'Maharashtra',capital:'Mumbai'},
+                    {state:'Goa',capital:'Panji'},
+                    {state:'Andhra Pradesh',capital:'Teleangana'}
+                ];
+            });
+            
+            jsApp.controller('local_ctrl3',function($scope){
+                $scope.text="Search With Name";
+                $scope.names=["gaurav","garu","harsh","harshita","payal","rohit","ravi"];
+            });
+            
+            jsApp.controller('local_ctrl4',function($scope){
+                $scope.names=[
+                    {state:'Rajasthan',capital:'Jaipur'},
+                    {state:'UP',capital:'Lucknow'},
+                    {state:'Maharashtra',capital:'Mumbai'},
+                    {state:'Goa',capital:'Panji'},
+                    {state:'Andhra Pradesh',capital:'Teleangana'}
+                ];
+                $scope.selectState=function(){
+                  $scope.userSelect = "state";  
+                };
+                $scope.selectCapital=function(){
+                  $scope.userSelect = "capital";  
+                };
+            });
+            
+            jsApp.controller('local',function($scope){
+                $scope.getNames=["gaurav","payal","rohit","anshu"];
+            });
+            
+            jsApp.filter('userFilter',function(){
+                return function(x){
+                       var i=0,text=""; 
+                       for(var i =0;i<x.length;i++)
+                       {
+                            c=x[i];
+                            if((i%2) == 0)
+                            {
+                                c=c.toUpperCase();
+                            }
+                            text=text+c;
+                       }
+                  
+                       return text;
+                };
+            });
+        </script>
+    </body>
+</html>

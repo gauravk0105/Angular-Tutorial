@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html data-ng-app="directive_module">
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="AngularFile/angularjs.js"></script>
+    </head>
+    <body>
+        
+        <!-- controller ctrl1 -->
+        
+        <div data-ng-controller="ctrl1">
+            <p>{{person.firstname+" "+person.lastname}}</p>
+        </div>
+        
+        
+        <!-- controller ctrl2 -->
+        
+        <div data-ng-controller="ctrl2">
+            <p>Enter The Color : <input type="text" data-ng-model="myColor"/></p>
+            <p>Enter Number 1 :  <input type="number" style="background-color: {{myColor}}" data-ng-model="a"/></p>
+            <p>Enter Number 2 :  <input type="number" style="background-color: {{myColor}}" data-ng-model="b"/></p>
+            <p style="background-color: {{myColor}}">The Sum of Number 1 and Number 2 is : {{a+b}}</p>
+            <p style="background-color: {{myColor}}">The Sum of Number 1 and Number 2 is : {{a*b}}</p>
+        </div>
+        
+        <!-- ng-repeat -->
+        
+        <div data-ng-controller="ctrl3">
+            <ol>
+                <li data-ng-repeat="x in names">{{x}}</li>
+            </ol>
+            <ol>
+                <li data-ng-repeat="x in gets">{{x.state +" has Capital "+x.capital}}</li>
+            </ol>
+        </div>
+        
+        
+        
+        <!-- User Defined Directive -->
+        
+        <div>
+            <p>User Defined Directive : <span data-user-directive></span></p>
+            <p><data-user-directive></data-user-directive></p>
+        <p>Game<p class="data-user-directive"></p></p>
+        </div>
+        
+        
+        <script>
+            var jsApp = angular.module('directive_module',[]);
+            
+            jsApp.controller('ctrl1',function($scope){
+                $scope.person =  {
+                                    firstname:"Gaurav",
+                                    lastname:"Khandelwal",
+                                    age:18
+                                 };
+            });
+            
+            jsApp.controller('ctrl2',function($scope){
+                $scope.a=0;
+                $scope.b=0;
+                $scope="white";
+            });
+            
+            jsApp.controller('ctrl3',function($scope){
+                $scope.names=['gaurav','payal','rohit','ravi'];
+                $scope.gets=[{state:'Rajasthan',capital:'Jaipur'},{state:'UP',capital:'Lucknow'}];
+            });
+            
+            jsApp.directive("userDirective",function(){
+                return{
+                    restrict:"C",
+                    template : "<h4>Hello</h4>"
+                };
+            });
+        </script>
+    </body>
+</html>

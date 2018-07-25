@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html data-ng-app="myApp">
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="AngularFile/angularjs.js"></script>
+    </head>
+    <body>
+        <div>
+            <p>Without Controller : {{5+6}}</p>
+        </div>
+        
+        <div data-ng-controller="ctrl" >
+            <p>With Controller : {{a+b}}</p> 
+        </div>
+        
+        <div>
+            <p data-my-directive="name"></p>
+        </div>
+        
+        <script>
+            var jsApp = angular.module('myApp',[]);
+            jsApp.controller('ctrl',function($scope)
+            {
+                $scope.a=6;
+                $scope.b=6;
+            });
+            jsApp.directive('myDirective',function(){
+                return {
+                            template : "Hello This is Directive " + (7+6)
+                       };
+            });
+        </script>
+    </body>
+</html>

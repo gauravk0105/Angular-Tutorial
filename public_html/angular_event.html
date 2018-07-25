@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html data-ng-app="event_module">
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="AngularFile/angularjs.js"></script>
+    </head>
+    <body>
+        <div data-ng-controller="ctrl">
+            <H3>Disabled Button</H3>
+            <p><input type="button" value="Click me" data-ng-disabled="a"></p>
+            <p><input type="checkbox" data-ng-model="a" />Disable Button</p>
+            <p>{{a}}</p>
+        </div>
+        
+        <div data-ng-controller="ctrl_event">
+            <H3>Toggle Button</H3>
+            <p><input data-ng-click="change()" data-ng-model="text" type="button" value="{{text}}" /></p>
+            <div data-ng-show="click">
+                <ul>
+                    <li>Gaurav</li>
+                    <li>Payal</li>
+                    <li>Rohit</li>
+                </ul>
+            </div>
+        </div>
+        
+        
+        <div data-ng-controller="Img_ctrl">
+            <div><center><H3>TIMER : {{time}}</H3></center></div>
+            <div><center><img data-ng-src="{{srcImg}}" style="height:340px;width:530px;"/></center></div>
+        </div>
+        
+        
+        <script>
+            var jsApp = angular.module('event_module',[]);
+            
+            jsApp.controller('ctrl',function($scope){
+                $scope.a=false;
+            });
+            
+            jsApp.service('$chngText',function(){
+                 this.updateText = function(txt){
+                    if(txt=="Show List")
+                        txt = "Hide List";
+                    else
+                        txt = "Show List";
+                    return txt;
+                 };   
+            });
+            
+            jsApp.controller('ctrl_event',function($scope,$chngText){
+                $scope.text = "Show List";
+                $scope.click=false;
+                $scope.change = function(){
+                    $scope.text = $chngText.updateText($scope.text);
+                    $scope.click=!$scope.click;
+                };
+            });
+            
+            jsApp.service('chngImgService',function(){
+                    this.chngImg = function(arr,index){
+                    return arr[index];                
+                };
+            });
+            
+            jsApp.controller('Img_ctrl',function($scope,$interval){
+                $scope.count=0;
+                $scope.arrImg=["imgs/1.jpg","imgs/2.jpg","imgs/3.jpg","imgs/4.jpg","imgs/5.jpg","imgs/6.jpg"];
+                $scope.srcImg=$scope.arrImg[$scope.count];
+                $scope.time = 1;
+                $interval(function(){
+                    $scope.time++;
+                    if($scope.time==4)
+                        $scope.time=1;
+                },1000);
+                $interval(function(){
+                    $scope.count++;
+                    $scope.count = ($scope.count)%6;
+                    $scope.srcImg=$scope.arrImg[$scope.count];
+                },3000);
+//    $interval(function(){
+//                        $scope.srcImg=$chngImgService.chngImg($scope.arrImg,count);
+//                        $scope.count++;s
+//                        $scope.count = $scope.count%6;
+//                    },1000);
+            });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html data-ng-app="scope_module">
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="AngularFile/angularjs.js"></script>
+    </head>
+    <body>
+        
+        <div>
+            <H3>Scope is Global</h3>
+            <p>{{ get }}</p>
+        </div>
+        
+        <div data-ng-controller="local_ctrl">
+            <H3>Scope is Local</h3>
+            <ul>
+                <li data-ng-repeat="x in names">{{x}}</li>
+            </ul>
+            <p>{{ get }}</p>
+        </div>
+        
+        
+        <div>
+            <H3>Scope is Global</h3>
+            <p>{{ get }}</p>
+        </div>
+        <script>
+           var jsApp=angular.module('scope_module',[]);
+           
+           jsApp.controller('local_ctrl',function($scope){
+               $scope.names=['Gaurav','Payal','Rohit'];
+               $scope.get="Local Controller";
+           });
+           
+           jsApp.run(function($rootScope){
+                 $rootScope.get="Global Controller";
+           });
+        </script>
+    </body>
+</html>
